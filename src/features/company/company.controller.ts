@@ -4,12 +4,15 @@ import { CompanyEntity } from './entities/company.entity';
 import { UpdateCompanyDto } from './dto/update-company.dto';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { CompanyService } from './company.service';
+import { Auth } from '@features/auth/decorators';
+import { RoleEnum } from '@features/user/enums/role.enum';
 
 @Controller('company')
 @ApiTags('Empresas')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) { }
 
+  @Auth(RoleEnum.ADMIN_USER, RoleEnum.EXTERNAL_USER)
   @ApiOperation({ summary: 'Obtiene todas las empresas' })
   @ApiOkResponse({ type: CompanyEntity, isArray: true })
   @Get()
@@ -17,6 +20,7 @@ export class CompanyController {
     return this.companyService.findAll();
   }
 
+  @Auth(RoleEnum.ADMIN_USER, RoleEnum.EXTERNAL_USER)
   @ApiOperation({ summary: 'Obtiene una empresa específica por su NIT' })
   @ApiOkResponse({ type: CompanyEntity })
   @ApiNotFoundResponse()
@@ -25,6 +29,7 @@ export class CompanyController {
     return this.companyService.findOne(nit);
   }
 
+  @Auth(RoleEnum.ADMIN_USER)
   @ApiOperation({ summary: 'Crea una nueva empresa' })
   @ApiCreatedResponse({ type: CompanyEntity })
   @Post()
@@ -32,6 +37,7 @@ export class CompanyController {
     return this.companyService.create(createEmpresaDto);
   }
 
+  @Auth(RoleEnum.ADMIN_USER)
   @ApiOperation({ summary: 'Actualiza una empresa existente por su NIT' })
   @ApiOkResponse({ type: CompanyEntity })
   @ApiNotFoundResponse()
@@ -43,6 +49,7 @@ export class CompanyController {
     return this.companyService.update(nit, updateCompanyDto);
   }
 
+  @Auth(RoleEnum.ADMIN_USER)
   @ApiOperation({ summary: 'Elimina una empresa existente por su NIT' })
   @ApiOkResponse()
   @ApiNotFoundResponse()
