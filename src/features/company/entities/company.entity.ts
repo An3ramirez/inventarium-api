@@ -2,8 +2,8 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('company')
 export class CompanyEntity {
-  @PrimaryColumn()
-  nit: string;
+  @PrimaryColumn({ type: 'numeric' })
+  nit: number;
 
   @Column()
   legal_name: string;
