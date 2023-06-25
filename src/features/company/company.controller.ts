@@ -7,5 +7,5 @@ import { ApiTags } from '@nestjs/swagger';
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) { }
 
-
+  
 }

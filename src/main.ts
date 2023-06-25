@@ -2,6 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { Logger, ValidationPipe } from "@nestjs/common";
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DataSource } from 'typeorm';
+import { runSeeds } from './db';
 
 async function bootstrap() {
   const listenPort = 3000;
@@ -27,6 +29,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  const datasource = app.get(DataSource);
+  await runSeeds(datasource);
 
   await app.listen(listenPort);
   Logger.log(`Api running on port ${listenPort}`);

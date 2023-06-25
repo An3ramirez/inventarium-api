@@ -1,11 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('company')
 export class CompanyEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
-  @Column({ unique: true })
+  @PrimaryColumn()
   nit: string;
 
   @Column()
