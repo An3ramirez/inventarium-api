@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn } from 'typeorm';
 
 @Entity('company')
 export class CompanyEntity {
-  @PrimaryColumn({ type: 'numeric' })
+  @PrimaryColumn({ type: 'bigint' })
   nit: number;
 
   @Column()

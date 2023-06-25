@@ -26,4 +26,10 @@ export class CreateProductDto {
   @MaxLength(255)
   @ApiProperty()
   description: string;
+
+  @Type(() => Number)
+  @IsInt()
+  @IsNotEmpty()
+  @ApiProperty({ description: 'nit de la empresa' })
+  company_id: number;
 }

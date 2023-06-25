@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { CompanyEntity } from '@features/company/entities/company.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
 
 @Entity('product')
 export class ProductEntity {
@@ -16,4 +17,8 @@ export class ProductEntity {
 
   @Column()
   description: string;
+
+  @ManyToOne(() => CompanyEntity, { nullable: false, eager: true })
+  @JoinColumn({ name: 'company_id', referencedColumnName: 'nit' })
+  company: CompanyEntity;
 }

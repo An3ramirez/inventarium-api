@@ -4,12 +4,13 @@ import { ProductEntity } from './entities/product.entity';
 import { Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { CompanyEntity } from '@features/company/entities/company.entity';
 
 @Injectable()
 export class CatalogService {
   constructor(
     @InjectRepository(ProductEntity)
-    private inventoryRepository: Repository<ProductEntity>,
+    private inventoryRepository: Repository<ProductEntity>
   ) {}
 
   async findAll(): Promise<ProductEntity[]> {
@@ -22,6 +23,7 @@ export class CatalogService {
 
   async create(createProductDto: CreateProductDto): Promise<ProductEntity> {
     const product: ProductEntity = this.inventoryRepository.create(createProductDto);
+    product.company = { nit: createProductDto.company_id } as CompanyEntity;
     return this.inventoryRepository.save(product);
   }
 
