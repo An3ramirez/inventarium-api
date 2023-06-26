@@ -28,7 +28,8 @@ export class CatalogService {
   }
 
   async update(id: number, updateProductDto: UpdateProductDto): Promise<ProductEntity> {
-    await this.inventoryRepository.update(id, updateProductDto);
+    const product: ProductEntity = this.inventoryRepository.create(updateProductDto);
+    await this.inventoryRepository.update(id, product);
     return this.inventoryRepository.findOne({ where: { id } });
   }
 
